@@ -28,28 +28,7 @@
 
 import Foundation
 
-extension Client {
-  
-  struct APIURLs {
-    static let NewsAPI = "https://newsapi.org/v2"
-  }
-  
-  struct Methods {
-    static let Sources = "/sources"
-    static let TopHeadlines = "/top-headlines"
-  }
-  
-  struct Keys {
-    static let Sources = "sources"
-    static let APIKey = "apiKey"
-    static let Country = "country"
-    static let Language = "language"
-  }
-  
-  struct Values {
-    static let NewsAPIKey = "8eb8b8a8634a4d739fdeb1c0e7d5aa22"
-    static let Country = "us"
-    static let Language = "en"
-  }
-  
+struct WebsiteDataWithSources: Decodable {
+  let status: String
+  let sources: [NewsSource]
 }

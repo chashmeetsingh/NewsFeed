@@ -28,52 +28,48 @@
 
 import UIKit
 
-private let cellIdentifier = "newsSourceCell"
+private let cellIdentifier = "newsFeedCell"
 
-class NewsSourceViewController: UITableViewController {
+class NewsFeedViewController: UITableViewController {
   
-  private var sources = [NewsSource]() {
+  private var articles = [Article]() {
     didSet {
       tableView.reloadData()
+    }
+  }
+  
+  var source: NewsSource! {
+    didSet {
+      title = "\(source.name)"
     }
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    title = "News Sources"
-    
-    getNewsData()
+    getNewsFeedData()
   }
   
-  private func getNewsData() {
-    Client.shared.getSources { (sources, error) in
+  private func getNewsFeedData() {
+    APIService.shared.getTopHeadlines(source.id) { (articles, error) in
       DispatchQueue.main.async {
-        guard let sources = sources else { return }
-        self.sources = sources
+        guard let articles = articles else { return }
+        self.articles = articles
       }
     }
   }
-  
+
   // MARK: - Table view data source
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return sources.count
+    return articles.count
   }
-  
+
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! NewsSourceCell
-    let source = sources[indexPath.row]
-    cell.newsSource = source
-    cell.tag = indexPath.row
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! NewsFeedCell
+    let article = articles[indexPath.row]
+    cell.article = article
     return cell
   }
-  
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if let destination = segue.destination as? NewsFeedViewController, let sender = sender as? UITableViewCell, segue.identifier == "showFeed" {
-      let index = sender.tag
-      destination.source = sources[index]
-    }
-  }
-  
+
 }

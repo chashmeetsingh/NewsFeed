@@ -28,25 +28,7 @@
 
 import Foundation
 
-struct WebsiteDataWithSources: Decodable {
-  let status: String
-  let sources: [NewsSource]
-}
-
 struct WebsiteDataWithArticles: Decodable {
   let status: String
   let articles: [Article]
-}
-
-struct NewsSource: Decodable {
-  let id: String
-  let name: String
-  let description: String
-  let url: String
-}
-
-struct Article: Decodable {
-  let title: String
-  let description: String
-  let author: String
 }

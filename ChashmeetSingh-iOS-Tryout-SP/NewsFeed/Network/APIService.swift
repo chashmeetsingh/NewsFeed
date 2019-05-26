@@ -28,9 +28,9 @@
 
 import Foundation
 
-class Client {
+class APIService {
   
-  static let shared = Client()
+  static let shared = APIService()
   var session: URLSession
   
   private init() {
