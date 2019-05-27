@@ -62,13 +62,13 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
-		B1EEA464229B455000B39340 /* View Controllers */ = {
+		B1EEA464229B455000B39340 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				B1EEA45F229B3B6200B39340 /* NewsSourceViewController.swift */,
 				B1EEA461229B3B8B00B39340 /* NewsFeedViewController.swift */,
 			);
-			path = "View Controllers";
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		B1EEA465229B456200B39340 /* Network */ = {
@@ -91,13 +91,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		B1EEA46D229B45DF00B39340 /* Custom Cells */ = {
+		B1EEA46D229B45DF00B39340 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				B10AD94E229B368800ED1EF5 /* NewsSourceCell.swift */,
 				B10AD950229B3A4F00ED1EF5 /* NewsFeedCell.swift */,
 			);
-			path = "Custom Cells";
+			path = Views;
 			sourceTree = "<group>";
 		};
 		D2A5F1F71F4A9143005CD714 = {
@@ -127,8 +127,8 @@
 				B1EEA463229B454700B39340 /* Storyboards */,
 				B1EEA465229B456200B39340 /* Network */,
 				B1EEA46C229B45CF00B39340 /* Models */,
-				B1EEA46D229B45DF00B39340 /* Custom Cells */,
-				B1EEA464229B455000B39340 /* View Controllers */,
+				B1EEA46D229B45DF00B39340 /* Views */,
+				B1EEA464229B455000B39340 /* Controllers */,
 			);
 			path = NewsFeed;
 			sourceTree = "<group>";
