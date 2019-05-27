@@ -35,6 +35,15 @@ class NewsSourceCell: UITableViewCell {
       newsSourceNameLabel.text = newsSource.name
       newsSourceURLLabel.text = newsSource.url
       newsSourceDescriptionLabel.text = newsSource.description
+      
+      // Display disclosure when language matches "en"
+      if newsSource.language == Constants.Values.Language {
+        accessoryType = .disclosureIndicator
+        isUserInteractionEnabled = true
+      } else {
+        accessoryType = .none
+        isUserInteractionEnabled = false
+      }
     }
   }
   

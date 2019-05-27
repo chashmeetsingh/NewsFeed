@@ -30,13 +30,13 @@ import Foundation
 import UIKit
 
 class NewsSourceViewModel {
-  
   let sourceTitle: String
   let newsUrl: String
   let newsDescription: String
   let id: String
   let language: String
   var accessoryType: UITableViewCell.AccessoryType
+  var isUserInteractionEnabled: Bool
   
   init(newsSource: NewsSource) {
     sourceTitle = newsSource.name
@@ -45,10 +45,13 @@ class NewsSourceViewModel {
     id = newsSource.id
     language = newsSource.language
     
+    // Display disclosure when language matches "en"
     if newsSource.language == Constants.Values.Language {
       accessoryType = .disclosureIndicator
+      isUserInteractionEnabled = true
     } else {
       accessoryType = .none
+      isUserInteractionEnabled = false
     }
   }
   

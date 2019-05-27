@@ -33,7 +33,7 @@ class NewsFeedCell: UITableViewCell {
   var article: Article! {
     didSet {
       headlinesTitleLabel.text = article.title
-      authorLabel.text = article.author
+      authorLabel.text = article.author ?? "Author not defined"
       newsDescription.text = article.description
     }
   }

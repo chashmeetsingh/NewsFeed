@@ -28,7 +28,7 @@
 
 import Foundation
 
-extension APIService {
+class Constants {
   
   struct APIURLs {
     static let NewsAPI = "https://newsapi.org/v2"

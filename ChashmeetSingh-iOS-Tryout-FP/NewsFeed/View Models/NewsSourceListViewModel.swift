@@ -28,8 +28,21 @@
 
 import Foundation
 
-struct Article: Decodable {
-  let title: String
-  let description: String
-  var author: String?
+class NewsSourceListViewModel {
+  var newsSourceViewModels: Box<[NewsSourceViewModel]> = Box([])
+  
+  init() {
+    fetchNewsSources()
+  }
+  
+  func fetchNewsSources() {
+    APIService.shared.getSources { [weak self] (sources, error) in
+      guard let sources = sources else {
+        print(error ?? "")
+        return
+      }
+      
+      self?.newsSourceViewModels.value = sources.map({ return NewsSourceViewModel(newsSource: $0) })
+    }
+  }
 }

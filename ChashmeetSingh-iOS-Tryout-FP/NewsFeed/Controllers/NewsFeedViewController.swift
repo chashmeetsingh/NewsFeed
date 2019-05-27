@@ -26,10 +26,50 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
+import UIKit
 
-struct Article: Decodable {
-  let title: String
-  let description: String
-  var author: String?
+private let cellIdentifier = "newsFeedCell"
+
+class NewsFeedViewController: UITableViewController {
+  
+  var viewModel = NewsFeedListViewModel()
+  var newsSourceViewModel: Box<NewsSourceViewModel>!
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    setupBindings()
+  }
+  
+  func setupBindings() {
+    newsSourceViewModel.bind { (model) in
+      self.title = model.sourceTitle
+      self.viewModel.newsSourceID = model.id
+      self.viewModel.fetchNewsFeeds()
+    }
+    
+    viewModel.newsFeedViewModels.bind { [weak self] _ in
+      DispatchQueue.main.async {
+        self?.tableView.reloadData()
+      }
+    }
+  }
+
+  // MARK: - Table view data source
+  
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return viewModel.newsFeedViewModels.value.count
+  }
+
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsFeedCell else { return UITableViewCell() }
+    let newsFeedViewModel = viewModel.newsFeedViewModels.value[indexPath.row]
+    cell.newsFeedViewModel = newsFeedViewModel
+    return cell
+  }
+  
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+  }
+
 }

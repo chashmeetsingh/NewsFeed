@@ -38,8 +38,8 @@ class APIService {
   }
   
   func getSources(_ completion: @escaping (_ result: [NewsSource]?, _ error: String?) -> Void) {
-    let params = [Keys.APIKey : Values.NewsAPIKey, Keys.Country : Values.Country, Keys.Language : Values.Language]
-    let url = URL(string: getApiUrl(apiMethod: Methods.Sources, apiParams: params))
+    let params = [Constants.Keys.APIKey : Constants.Values.NewsAPIKey]
+    let url = URL(string: getApiUrl(apiMethod: Constants.Methods.Sources, apiParams: params))
     
     URLSession.shared.dataTask(with: url!) { data, _, _ in
       guard let data = data else { return }
@@ -55,8 +55,8 @@ class APIService {
   }
   
   func getTopHeadlines(_ source: String, _ completion: @escaping (_ result: [Article]?, _ error: String?) -> Void) {
-    let params = [Keys.APIKey : Values.NewsAPIKey, Keys.Sources : source]
-    let url = URL(string: getApiUrl(apiMethod: Methods.TopHeadlines, apiParams: params))
+    let params = [Constants.Keys.APIKey : Constants.Values.NewsAPIKey, Constants.Keys.Sources : source]
+    let url = URL(string: getApiUrl(apiMethod: Constants.Methods.TopHeadlines, apiParams: params))
     
     URLSession.shared.dataTask(with: url!) { data, _, _ in
       guard let data = data else { return }
@@ -72,7 +72,7 @@ class APIService {
   }
   
   // create a URL
-  func getApiUrl(_ apiUrl: String = APIURLs.NewsAPI, apiMethod method: String, apiParams parameters: [String : String]) -> String {
+  func getApiUrl(_ apiUrl: String = Constants.APIURLs.NewsAPI, apiMethod method: String, apiParams parameters: [String : String]) -> String {
     var baseURL = "\(apiUrl)\(method)?"
     for (key, value) in parameters {
       baseURL += "\(key)=\(value)&"

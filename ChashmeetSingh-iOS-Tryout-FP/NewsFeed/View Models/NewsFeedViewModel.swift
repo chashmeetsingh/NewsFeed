@@ -29,7 +29,6 @@
 import Foundation
 
 class NewsFeedViewModel {
-  
   let newsTitle: String
   let newsAuthor: String
   let newsDescription: String

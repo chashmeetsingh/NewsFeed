@@ -49,7 +49,11 @@ class NewsSourceViewController: UITableViewController {
   private func getNewsData() {
     APIService.shared.getSources { (sources, error) in
       DispatchQueue.main.async {
-        guard let sources = sources else { return }
+        guard let sources = sources else {
+          print(error ?? "")
+          return
+        }
+        
         self.sources = sources
       }
     }
@@ -62,7 +66,7 @@ class NewsSourceViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! NewsSourceCell
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsSourceCell else { return UITableViewCell() }
     let source = sources[indexPath.row]
     cell.newsSource = source
     cell.tag = indexPath.row

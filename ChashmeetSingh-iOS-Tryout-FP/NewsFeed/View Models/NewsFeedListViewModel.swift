@@ -26,48 +26,20 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
+import Foundation
 
-private let cellIdentifier = "newsFeedCell"
-
-class NewsFeedViewController: UITableViewController {
+class NewsFeedListViewModel {
+  var newsFeedViewModels: Box<[NewsFeedViewModel]> = Box([])
+  var newsSourceID: String!
   
-  private var newsFeedViewModels = [NewsFeedViewModel]()
-  
-  var newsSourceViewModel: NewsSourceViewModel!
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    title = newsSourceViewModel.sourceTitle
-    getNewsFeedData()
-  }
-  
-  private func getNewsFeedData() {
-    APIService.shared.getTopHeadlines(newsSourceViewModel.id) { (articles, error) in
-      DispatchQueue.main.async {
-        if let error = error {
-          print("Failed to fetch top headlines: ", error)
-          return
-        }
-        
-        self.newsFeedViewModels = articles?.map({ return NewsFeedViewModel(article: $0) }) ?? []
-        self.tableView.reloadData()
+  func fetchNewsFeeds() {
+    APIService.shared.getTopHeadlines(newsSourceID) { [weak self] (articles, error) in
+      guard let articles = articles else {
+        print(error ?? "")
+        return
       }
+      
+      self?.newsFeedViewModels.value = articles.map({ return NewsFeedViewModel(article: $0) })
     }
   }
-
-  // MARK: - Table view data source
-  
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return newsFeedViewModels.count
-  }
-
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! NewsFeedCell
-    let newsFeedViewModel = newsFeedViewModels[indexPath.row]
-    cell.newsFeedViewModel = newsFeedViewModel
-    return cell
-  }
-
 }

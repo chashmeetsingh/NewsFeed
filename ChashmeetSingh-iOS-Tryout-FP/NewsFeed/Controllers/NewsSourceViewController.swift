@@ -28,18 +28,46 @@
 
 import UIKit
 
-class NewsSourceCell: UITableViewCell {
+private let cellIdentifier = "newsSourceCell"
+
+class NewsSourceViewController: UITableViewController {
   
-  var newsSourceViewModel: NewsSourceViewModel! {
-    didSet {
-      newsSourceNameLabel.text = newsSourceViewModel.sourceTitle
-      newsSourceURLLabel.text = newsSourceViewModel.newsUrl
-      newsSourceDescriptionLabel.text = newsSourceViewModel.newsDescription
-      accessoryType = newsSourceViewModel.accessoryType
+  var viewModel = NewsSourceListViewModel()
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    title = "News Sources"
+    setupBindings()
+  }
+  
+  func setupBindings() {
+    viewModel.newsSourceViewModels.bind { [weak self] _ in
+      DispatchQueue.main.async {
+        self?.tableView.reloadData()
+      }
     }
   }
   
-  @IBOutlet weak var newsSourceNameLabel: UILabel!
-  @IBOutlet weak var newsSourceURLLabel: UILabel!
-  @IBOutlet weak var newsSourceDescriptionLabel: UILabel!
+  // MARK: - Table view data source
+  
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return viewModel.newsSourceViewModels.value.count
+  }
+  
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsSourceCell else { return UITableViewCell() }
+    let newsSourceViewModel = viewModel.newsSourceViewModels.value[indexPath.row]
+    cell.newsSourceViewModel = newsSourceViewModel
+    cell.tag = indexPath.row
+    return cell
+  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if let destination = segue.destination as? NewsFeedViewController, let sender = sender as? UITableViewCell, segue.identifier == "showFeed" {
+      let index = sender.tag
+      destination.newsSourceViewModel = Box(viewModel.newsSourceViewModels.value[index])
+    }
+  }
+  
 }

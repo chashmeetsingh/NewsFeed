@@ -53,7 +53,10 @@ class NewsFeedViewController: UITableViewController {
   private func getNewsFeedData() {
     APIService.shared.getTopHeadlines(source.id) { (articles, error) in
       DispatchQueue.main.async {
-        guard let articles = articles else { return }
+        guard let articles = articles else {
+          print(error ?? "")
+          return
+        }
         self.articles = articles
       }
     }
@@ -66,7 +69,7 @@ class NewsFeedViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! NewsFeedCell
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsFeedCell else { return UITableViewCell() }
     let article = articles[indexPath.row]
     cell.article = article
     return cell

@@ -28,58 +28,20 @@
 
 import UIKit
 
-private let cellIdentifier = "newsSourceCell"
-
-class NewsSourceViewController: UITableViewController {
+class NewsSourceCell: UITableViewCell {
   
-  private var newsSourceViewModels = [NewsSourceViewModel]()
-  
-//  private var newsSources = [NewsSourceViewModel]() {
-//    didSet {
-//      tableView.reloadData()
-//    }
-//  }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    title = "News Sources"
-    fetchNewsSources()
-  }
-  
-  func fetchNewsSources() {
-    APIService.shared.getSources { (sources, error) in
-      DispatchQueue.main.async {
-        if let error = error {
-          print("Failed to fetch news sources: ", error)
-          return
-        }
-        
-        self.newsSourceViewModels = sources?.map({ return NewsSourceViewModel(newsSource: $0) }) ?? []
-        self.tableView.reloadData()
-      }
+  var newsSourceViewModel: NewsSourceViewModel! {
+    didSet {
+      newsSourceNameLabel.text = newsSourceViewModel.sourceTitle
+      newsSourceURLLabel.text = newsSourceViewModel.newsUrl
+      newsSourceDescriptionLabel.text = newsSourceViewModel.newsDescription
+      accessoryType = newsSourceViewModel.accessoryType
+      isUserInteractionEnabled = newsSourceViewModel.isUserInteractionEnabled
     }
   }
   
-  // MARK: - Table view data source
   
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return newsSourceViewModels.count
-  }
-  
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! NewsSourceCell
-    let newsSourceViewModel = newsSourceViewModels[indexPath.row]
-    cell.newsSourceViewModel = newsSourceViewModel
-    cell.tag = indexPath.row
-    return cell
-  }
-  
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if let destination = segue.destination as? NewsFeedViewController, let sender = sender as? UITableViewCell, segue.identifier == "showFeed" {
-      let index = sender.tag
-      destination.newsSourceViewModel = newsSourceViewModels[index]
-    }
-  }
-  
+  @IBOutlet weak var newsSourceNameLabel: UILabel!
+  @IBOutlet weak var newsSourceURLLabel: UILabel!
+  @IBOutlet weak var newsSourceDescriptionLabel: UILabel!
 }
