@@ -30,10 +30,14 @@ import UIKit
 
 class NewsFeedCell: UITableViewCell {
   
+  // 1
   var newsFeedViewModel: NewsFeedViewModel! {
     didSet {
+      // 2
       headlinesTitleLabel.text = newsFeedViewModel.newsTitle
+      // 3
       authorLabel.text = newsFeedViewModel.newsAuthor
+      // 4
       newsDescription.text = newsFeedViewModel.newsDescription
     }
   }

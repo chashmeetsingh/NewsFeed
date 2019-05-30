@@ -30,19 +30,24 @@ import Foundation
 
 // Generic class for binding and listener
 class Box<T> {
+  // 1
   typealias Listener = (T) -> Void
+  // 2
   var listener: Listener?
   
+  // 3
   var value: T {
     didSet {
       listener?(value)
     }
   }
   
+  // 4
   init(_ value: T) {
     self.value = value
   }
   
+  // 5
   func bind(listener: Listener?) {
     self.listener = listener
     listener?(value)

@@ -43,11 +43,15 @@ class NewsSourceViewController: UITableViewController {
   
   // Adds a listener to the data source
   func setupBindings() {
+    // 1
     viewModel.newsSourceViewModels.bind { [weak self] _ in
+      // 2
       guard let self = self else {
         return
       }
+      // 3
       DispatchQueue.main.async {
+        // 4
         self.tableView.reloadData()
       }
     }
@@ -70,9 +74,11 @@ class NewsSourceViewController: UITableViewController {
       withIdentifier: cellIdentifier,
       for: indexPath
     ) as? NewsSourceCell else { return UITableViewCell() }
-    
+    // 1
     let newsSourceViewModel = viewModel.newsSourceViewModels.value[indexPath.row]
+    // 2
     cell.newsSourceViewModel = newsSourceViewModel
+    // 3
     cell.tag = indexPath.row
     return cell
   }

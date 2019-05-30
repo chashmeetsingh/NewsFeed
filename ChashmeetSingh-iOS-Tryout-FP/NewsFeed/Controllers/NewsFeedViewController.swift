@@ -42,18 +42,26 @@ class NewsFeedViewController: UITableViewController {
   }
   
   func setupBindings() {
+    // 1
     newsSourceViewModel.bind { (model) in
+      // 2
       self.title = model.sourceTitle
+      // 3
       self.viewModel.newsSourceID = model.id
+      // 4
       self.viewModel.fetchNewsFeeds()
     }
     
     // Adds a listener to the data source
+    // 1
     viewModel.newsFeedViewModels.bind { [weak self] _ in
+      // 2
       guard let self = self else {
         return
       }
+      // 3
       DispatchQueue.main.async {
+        // 4
         self.tableView.reloadData()
       }
     }
@@ -77,7 +85,9 @@ class NewsFeedViewController: UITableViewController {
       for: indexPath
     ) as? NewsFeedCell else { return UITableViewCell() }
     
+    // 1
     let newsFeedViewModel = viewModel.newsFeedViewModels.value[indexPath.row]
+    // 2
     cell.newsFeedViewModel = newsFeedViewModel
     return cell
   }

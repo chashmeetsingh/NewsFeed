@@ -34,15 +34,18 @@ class NewsFeedListViewModel {
   
   // Fetch top headlines from the source
   func fetchNewsFeeds() {
+    // 1
     APIService.shared.getTopHeadlines(newsSourceID) { [weak self] (articles, error) in
+      // 2
       guard let self = self else {
         return
       }
+      // 3
       guard let articles = articles else {
         print(error ?? "")
         return
       }
-      
+      // 4
       self.newsFeedViewModels.value = articles.map({ return NewsFeedViewModel(article: $0) })
     }
   }
