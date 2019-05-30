@@ -32,6 +32,7 @@ class NewsFeedListViewModel {
   var newsFeedViewModels: Box<[NewsFeedViewModel]> = Box([])
   var newsSourceID: String!
   
+  // Fetch top headlines from the source
   func fetchNewsFeeds() {
     APIService.shared.getTopHeadlines(newsSourceID) { [weak self] (articles, error) in
       guard let articles = articles else {

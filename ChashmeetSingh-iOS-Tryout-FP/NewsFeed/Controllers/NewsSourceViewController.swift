@@ -41,6 +41,7 @@ class NewsSourceViewController: UITableViewController {
     setupBindings()
   }
   
+  // Adds a listener to the data source
   func setupBindings() {
     viewModel.newsSourceViewModels.bind { [weak self] _ in
       DispatchQueue.main.async {
@@ -56,7 +57,11 @@ class NewsSourceViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsSourceCell else { return UITableViewCell() }
+    guard let cell = tableView.dequeueReusableCell(
+      withIdentifier: cellIdentifier,
+      for: indexPath
+    ) as? NewsSourceCell else { return UITableViewCell() }
+    
     let newsSourceViewModel = viewModel.newsSourceViewModels.value[indexPath.row]
     cell.newsSourceViewModel = newsSourceViewModel
     cell.tag = indexPath.row
@@ -64,7 +69,10 @@ class NewsSourceViewController: UITableViewController {
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if let destination = segue.destination as? NewsFeedViewController, let sender = sender as? UITableViewCell, segue.identifier == "showFeed" {
+    if let destination = segue.destination as? NewsFeedViewController,
+      let sender = sender as? UITableViewCell,
+      segue.identifier == "showFeed" {
+      
       let index = sender.tag
       destination.newsSourceViewModel = Box(viewModel.newsSourceViewModels.value[index])
     }

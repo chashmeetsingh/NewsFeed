@@ -48,6 +48,7 @@ class NewsFeedViewController: UITableViewController {
       self.viewModel.fetchNewsFeeds()
     }
     
+    // Adds a listener to the data source
     viewModel.newsFeedViewModels.bind { [weak self] _ in
       DispatchQueue.main.async {
         self?.tableView.reloadData()
@@ -62,7 +63,11 @@ class NewsFeedViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsFeedCell else { return UITableViewCell() }
+    guard let cell = tableView.dequeueReusableCell(
+      withIdentifier: cellIdentifier,
+      for: indexPath
+    ) as? NewsFeedCell else { return UITableViewCell() }
+    
     let newsFeedViewModel = viewModel.newsFeedViewModels.value[indexPath.row]
     cell.newsFeedViewModel = newsFeedViewModel
     return cell

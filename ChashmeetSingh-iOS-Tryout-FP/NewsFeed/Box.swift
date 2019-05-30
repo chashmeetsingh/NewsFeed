@@ -28,6 +28,7 @@
 
 import Foundation
 
+// Generic class for binding and listener
 class Box<T> {
   typealias Listener = (T) -> Void
   var listener: Listener?

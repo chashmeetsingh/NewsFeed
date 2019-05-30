@@ -53,6 +53,8 @@ class APIService {
     URLSession.shared.dataTask(with: url!) { data, _, _ in
       guard let data = data else { return }
       
+      // Try parsing JSON
+      // Return error if fails
       do {
         let websiteData = try JSONDecoder().decode(
           WebsiteDataWithSources.self,
@@ -83,6 +85,8 @@ class APIService {
     URLSession.shared.dataTask(with: url!) { data, _, _ in
       guard let data = data else { return }
       
+      // Try parsing JSON
+      // Return error if fails
       do {
         let websiteData = try JSONDecoder().decode(
           WebsiteDataWithArticles.self,

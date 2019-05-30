@@ -35,6 +35,7 @@ class NewsSourceListViewModel {
     fetchNewsSources()
   }
   
+  // Fetch news sources
   func fetchNewsSources() {
     APIService.shared.getSources { [weak self] (sources, error) in
       guard let sources = sources else {

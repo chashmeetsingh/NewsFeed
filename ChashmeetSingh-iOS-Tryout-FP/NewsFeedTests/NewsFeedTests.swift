@@ -39,6 +39,7 @@ class NewsFeedTests: XCTestCase {
       // Put teardown code here. This method is called after the invocation of each test method in the class.
   }
 
+  // Test if the news source has a language of "en"
   func testNewsSourceViewModelWithENLanguage() {
     let newsSource = NewsSource(id: "abc-news", name: "ABC News", description: "This is ABC news description", url: "https://abcnews.go.com", language: "en")
     let newsSourceViewModel = NewsSourceViewModel(newsSource: newsSource)
@@ -51,6 +52,7 @@ class NewsFeedTests: XCTestCase {
     XCTAssertEqual(.disclosureIndicator, newsSourceViewModel.accessoryType)
   }
   
+  // Test if the news source doesn't have a language of "en"
   func testNewsSourceViewModelWithoutENLanguage() {
     let newsSource = NewsSource(id: "abc-news", name: "ABC News", description: "This is ABC news description", url: "https://abcnews.go.com", language: "au")
     let newsSourceViewModel = NewsSourceViewModel(newsSource: newsSource)
@@ -58,6 +60,7 @@ class NewsFeedTests: XCTestCase {
     XCTAssertEqual(.none, newsSourceViewModel.accessoryType)
   }
   
+  // Test the values in the feed model
   func testNewsFeedModel() {
     let article = Article(title: "BJP victory in India", description: "BJP won Indian elections with 303 seats", author: "Chashmeet Singh")
     let newsFeedViewModel = NewsFeedViewModel(article: article)

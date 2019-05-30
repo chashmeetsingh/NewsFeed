@@ -35,6 +35,7 @@ class NewsFeedViewModel {
   
   init(article: Article) {
     newsTitle = article.title
+    // Added a default value since some values were null
     newsAuthor = article.author ?? "Author not defined"
     newsDescription = article.description
   }

@@ -37,15 +37,28 @@ class APIService {
     session = URLSession.shared
   }
   
+  // Fetches news feed sources
   func getSources(_ completion: @escaping (_ result: [NewsSource]?, _ error: String?) -> Void) {
-    let params = [Constants.Keys.APIKey : Constants.Values.NewsAPIKey]
-    let url = URL(string: getApiUrl(apiMethod: Constants.Methods.Sources, apiParams: params))
+    let params = [
+      Constants.Keys.APIKey : Constants.Values.NewsAPIKey
+    ]
+    let url = URL(
+      string: getApiUrl(
+        apiMethod: Constants.Methods.Sources,
+        apiParams: params
+      )
+    )
     
     URLSession.shared.dataTask(with: url!) { data, _, _ in
       guard let data = data else { return }
       
+      // Try parsing JSON
+      // Return error if fails
       do {
-        let websiteData = try JSONDecoder().decode(WebsiteDataWithSources.self, from: data)
+        let websiteData = try JSONDecoder().decode(
+          WebsiteDataWithSources.self,
+          from: data
+        )
         completion(websiteData.sources, nil)
       } catch {
         completion(nil, "Error serialising json")
@@ -54,15 +67,29 @@ class APIService {
     }.resume()
   }
   
+  // Fetches headlines from a particular source
   func getTopHeadlines(_ source: String, _ completion: @escaping (_ result: [Article]?, _ error: String?) -> Void) {
-    let params = [Constants.Keys.APIKey : Constants.Values.NewsAPIKey, Constants.Keys.Sources : source]
-    let url = URL(string: getApiUrl(apiMethod: Constants.Methods.TopHeadlines, apiParams: params))
+    let params = [
+      Constants.Keys.APIKey : Constants.Values.NewsAPIKey,
+      Constants.Keys.Sources : source
+    ]
+    let url = URL(
+      string: getApiUrl(
+        apiMethod: Constants.Methods.TopHeadlines,
+        apiParams: params
+      )
+    )
     
     URLSession.shared.dataTask(with: url!) { data, _, _ in
       guard let data = data else { return }
       
+      // Try parsing JSON
+      // Return error if fails
       do {
-        let websiteData = try JSONDecoder().decode(WebsiteDataWithArticles.self, from: data)
+        let websiteData = try JSONDecoder().decode(
+          WebsiteDataWithArticles.self,
+          from: data
+        )
         completion(websiteData.articles, nil)
       } catch let error {
         completion(nil, "Error serialising json: \(error.localizedDescription)")
