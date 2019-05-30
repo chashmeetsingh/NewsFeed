@@ -52,7 +52,10 @@ class NewsFeedViewController: UITableViewController {
   
   // Fetch top headlines from the source
   private func getNewsFeedData() {
-    APIService.shared.getTopHeadlines(source.id) { (articles, error) in
+    APIService.shared.getTopHeadlines(source.id) { [weak self] (articles, error) in
+      guard let self = self else {
+        return
+      }
       DispatchQueue.main.async {
         guard let articles = articles else {
           print(error ?? "")
@@ -63,6 +66,10 @@ class NewsFeedViewController: UITableViewController {
     }
   }
 
+}
+
+extension NewsFeedViewController {
+  
   // MARK: - Table view data source
   
   override func tableView(
@@ -71,7 +78,7 @@ class NewsFeedViewController: UITableViewController {
   ) -> Int {
     return articles.count
   }
-
+  
   override func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath
@@ -84,5 +91,5 @@ class NewsFeedViewController: UITableViewController {
     cell.article = article
     return cell
   }
-
+  
 }

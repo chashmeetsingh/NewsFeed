@@ -40,7 +40,7 @@ class APIService {
   // Fetches news feed sources
   func getSources(_ completion: @escaping (_ result: [NewsSource]?, _ error: String?) -> Void) {
     let params = [
-      Constants.Keys.APIKey : Constants.Values.NewsAPIKey
+      Constants.Keys.APIKey: Constants.Values.NewsAPIKey
     ]
     
     let url = URL(
@@ -71,8 +71,8 @@ class APIService {
   // Fetches headlines from a particular source
   func getTopHeadlines(_ source: String, _ completion: @escaping (_ result: [Article]?, _ error: String?) -> Void) {
     let params = [
-      Constants.Keys.APIKey : Constants.Values.NewsAPIKey,
-      Constants.Keys.Sources : source
+      Constants.Keys.APIKey: Constants.Values.NewsAPIKey,
+      Constants.Keys.Sources: source
     ]
     
     let url = URL(
@@ -101,7 +101,7 @@ class APIService {
   }
   
   // create a URL
-  func getApiUrl(_ apiUrl: String = Constants.APIURLs.NewsAPI, apiMethod method: String, apiParams parameters: [String : String]) -> String {
+  func getApiUrl(_ apiUrl: String = Constants.APIURLs.NewsAPI, apiMethod method: String, apiParams parameters: [String: String]) -> String {
     var baseURL = "\(apiUrl)\(method)?"
     for (key, value) in parameters {
       baseURL += "\(key)=\(value)&"

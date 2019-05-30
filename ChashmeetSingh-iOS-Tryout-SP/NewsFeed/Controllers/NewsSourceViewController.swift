@@ -48,7 +48,10 @@ class NewsSourceViewController: UITableViewController {
   
   // Fetch news sources
   private func getNewsData() {
-    APIService.shared.getSources { (sources, error) in
+    APIService.shared.getSources { [weak self] (sources, error) in
+      guard let self = self else {
+        return
+      }
       DispatchQueue.main.async {
         guard let sources = sources else {
           print(error ?? "")
@@ -59,6 +62,10 @@ class NewsSourceViewController: UITableViewController {
       }
     }
   }
+  
+}
+
+extension NewsSourceViewController {
   
   // MARK: - Table view data source
   
@@ -88,8 +95,8 @@ class NewsSourceViewController: UITableViewController {
     if let destination = segue.destination as? NewsFeedViewController,
       let sender = sender as? UITableViewCell,
       segue.identifier == "showFeed" {
-        let index = sender.tag
-        destination.source = sources[index]
+      let index = sender.tag
+      destination.source = sources[index]
     }
   }
   

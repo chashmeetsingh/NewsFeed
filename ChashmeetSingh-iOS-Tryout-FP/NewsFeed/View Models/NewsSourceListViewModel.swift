@@ -38,12 +38,15 @@ class NewsSourceListViewModel {
   // Fetch news sources
   func fetchNewsSources() {
     APIService.shared.getSources { [weak self] (sources, error) in
+      guard let self = self else {
+        return
+      }
       guard let sources = sources else {
         print(error ?? "")
         return
       }
       
-      self?.newsSourceViewModels.value = sources.map({ return NewsSourceViewModel(newsSource: $0) })
+      self.newsSourceViewModels.value = sources.map({ return NewsSourceViewModel(newsSource: $0) })
     }
   }
 }

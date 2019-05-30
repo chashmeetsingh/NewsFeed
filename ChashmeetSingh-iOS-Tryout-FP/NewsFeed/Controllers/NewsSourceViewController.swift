@@ -44,19 +44,28 @@ class NewsSourceViewController: UITableViewController {
   // Adds a listener to the data source
   func setupBindings() {
     viewModel.newsSourceViewModels.bind { [weak self] _ in
+      guard let self = self else {
+        return
+      }
       DispatchQueue.main.async {
-        self?.tableView.reloadData()
+        self.tableView.reloadData()
       }
     }
   }
   
   // MARK: - Table view data source
   
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(
+    _ tableView: UITableView,
+    numberOfRowsInSection section: Int
+  ) -> Int {
     return viewModel.newsSourceViewModels.value.count
   }
   
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  override func tableView(
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(
       withIdentifier: cellIdentifier,
       for: indexPath
