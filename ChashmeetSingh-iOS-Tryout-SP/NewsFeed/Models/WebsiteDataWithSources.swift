@@ -28,6 +28,8 @@
 
 import Foundation
 
+// Decodable protocol helps parse
+// JSON without writing lines of code
 struct WebsiteDataWithSources: Decodable {
   let status: String
   let sources: [NewsSource]

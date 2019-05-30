@@ -46,6 +46,7 @@ class NewsSourceViewController: UITableViewController {
     getNewsData()
   }
   
+  // Fetch news sources
   private func getNewsData() {
     APIService.shared.getSources { (sources, error) in
       DispatchQueue.main.async {
@@ -61,12 +62,22 @@ class NewsSourceViewController: UITableViewController {
   
   // MARK: - Table view data source
   
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(
+    _ tableView: UITableView,
+    numberOfRowsInSection section: Int
+  ) -> Int {
     return sources.count
   }
   
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsSourceCell else { return UITableViewCell() }
+  override func tableView(
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(
+      withIdentifier: cellIdentifier,
+      for: indexPath
+    ) as? NewsSourceCell else { return UITableViewCell() }
+    
     let source = sources[indexPath.row]
     cell.newsSource = source
     cell.tag = indexPath.row
@@ -74,9 +85,11 @@ class NewsSourceViewController: UITableViewController {
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if let destination = segue.destination as? NewsFeedViewController, let sender = sender as? UITableViewCell, segue.identifier == "showFeed" {
-      let index = sender.tag
-      destination.source = sources[index]
+    if let destination = segue.destination as? NewsFeedViewController,
+      let sender = sender as? UITableViewCell,
+      segue.identifier == "showFeed" {
+        let index = sender.tag
+        destination.source = sources[index]
     }
   }
   

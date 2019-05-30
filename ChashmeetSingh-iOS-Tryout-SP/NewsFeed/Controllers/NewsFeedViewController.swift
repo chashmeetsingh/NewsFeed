@@ -50,6 +50,7 @@ class NewsFeedViewController: UITableViewController {
     getNewsFeedData()
   }
   
+  // Fetch top headlines from the source
   private func getNewsFeedData() {
     APIService.shared.getTopHeadlines(source.id) { (articles, error) in
       DispatchQueue.main.async {
@@ -64,12 +65,21 @@ class NewsFeedViewController: UITableViewController {
 
   // MARK: - Table view data source
   
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(
+    _ tableView: UITableView,
+    numberOfRowsInSection section: Int
+  ) -> Int {
     return articles.count
   }
 
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsFeedCell else { return UITableViewCell() }
+  override func tableView(
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(
+      withIdentifier: cellIdentifier, for: indexPath
+    ) as? NewsFeedCell else { return UITableViewCell() }
+    
     let article = articles[indexPath.row]
     cell.article = article
     return cell
