@@ -29,6 +29,7 @@
 import Foundation
 
 class NewsSourceListViewModel {
+  // 1
   var newsSourceViewModels: Box<[NewsSourceViewModel]> = Box([])
   
   init() {
@@ -37,9 +38,8 @@ class NewsSourceListViewModel {
   
   // Fetch news sources
   func fetchNewsSources() {
-    // 1
+    // 2
     APIService.shared.getSources { [weak self] (sources, error) in
-      // 2
       guard let self = self else {
         return
       }
