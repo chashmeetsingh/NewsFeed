@@ -30,6 +30,7 @@ import Foundation
 import UIKit
 
 class NewsSourceViewModel {
+  // 1
   let sourceTitle: String
   let newsUrl: String
   let newsDescription: String
@@ -38,6 +39,7 @@ class NewsSourceViewModel {
   var accessoryType: UITableViewCell.AccessoryType
   var isUserInteractionEnabled: Bool
   
+  // 2
   init(newsSource: NewsSource) {
     sourceTitle = newsSource.name
     newsUrl = newsSource.url
