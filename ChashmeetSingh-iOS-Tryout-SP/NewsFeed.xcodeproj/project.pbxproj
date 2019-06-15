@@ -53,6 +53,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B15D6D6122B56C790039293B /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "View Models";
+			sourceTree = "<group>";
+		};
 		B1EEA463229B454700B39340 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +136,7 @@
 				B1EEA46C229B45CF00B39340 /* Models */,
 				B1EEA46D229B45DF00B39340 /* Views */,
 				B1EEA464229B455000B39340 /* Controllers */,
+				B15D6D6122B56C790039293B /* View Models */,
 			);
 			path = NewsFeed;
 			sourceTree = "<group>";
