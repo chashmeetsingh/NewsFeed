@@ -35,13 +35,9 @@ class NewsSourceCell: UITableViewCell {
     didSet {
       // 2
       newsSourceNameLabel.text = newsSourceViewModel.sourceTitle
-      // 3
       newsSourceURLLabel.text = newsSourceViewModel.newsUrl
-      // 4
       newsSourceDescriptionLabel.text = newsSourceViewModel.newsDescription
-      // 5
       accessoryType = newsSourceViewModel.accessoryType
-      // 6
       isUserInteractionEnabled = newsSourceViewModel.isUserInteractionEnabled
     }
   }
