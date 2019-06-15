@@ -48,7 +48,9 @@ class NewsSourceListViewModel {
       }
       
       // 2
-      self.newsSourceViewModels.value = sources.map({ return NewsSourceViewModel(newsSource: $0) })
+      self.newsSourceViewModels.value = sources.map({
+        return NewsSourceViewModel(newsSource: $0)
+      })
     }
   }
 }
