@@ -66,6 +66,10 @@ class NewsFeedViewController: UITableViewController {
       }
     }
   }
+  
+}
+
+extension NewsFeedViewController {
 
   // MARK: - Table view data source
   

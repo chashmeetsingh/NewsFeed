@@ -57,6 +57,10 @@ class NewsSourceViewController: UITableViewController {
     }
   }
   
+}
+
+extension NewsSourceViewController {
+  
   // MARK: - Table view data source
   
   override func tableView(
