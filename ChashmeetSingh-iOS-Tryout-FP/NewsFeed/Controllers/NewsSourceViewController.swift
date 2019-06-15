@@ -67,6 +67,7 @@ extension NewsSourceViewController {
     _ tableView: UITableView,
     numberOfRowsInSection section: Int
   ) -> Int {
+    // 1
     return viewModel.newsSourceViewModels.value.count
   }
   
@@ -78,11 +79,11 @@ extension NewsSourceViewController {
       withIdentifier: cellIdentifier,
       for: indexPath
     ) as? NewsSourceCell else { return UITableViewCell() }
-    // 1
-    let newsSourceViewModel = viewModel.newsSourceViewModels.value[indexPath.row]
     // 2
-    cell.newsSourceViewModel = newsSourceViewModel
+    let newsSourceViewModel = viewModel.newsSourceViewModels.value[indexPath.row]
     // 3
+    cell.newsSourceViewModel = newsSourceViewModel
+    
     cell.tag = indexPath.row
     return cell
   }
@@ -91,7 +92,6 @@ extension NewsSourceViewController {
     if let destination = segue.destination as? NewsFeedViewController,
       let sender = sender as? UITableViewCell,
       segue.identifier == "showFeed" {
-      
       let index = sender.tag
       destination.newsSourceViewModel = Box(viewModel.newsSourceViewModels.value[index])
     }
