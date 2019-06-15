@@ -47,7 +47,7 @@ class NewsSourceViewController: UITableViewController {
   }
   
   // Fetch news sources
-  private func getNewsData() {
+  func getNewsData() {
     APIService.shared.getSources { [weak self] (sources, error) in
       guard let self = self else {
         return
